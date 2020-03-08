@@ -3882,7 +3882,7 @@ var heatmap = collect.heatmap = {
     }
     return false;
   },
-
+  // 初始化滚动事件 （停留时间）
   initScrollmap: function() {
     if (!_.isObject(collect.para.heatmap) || collect.para.heatmap.scroll_notice_map !== 'default') {
       return false;
@@ -3967,6 +3967,7 @@ var heatmap = collect.heatmap = {
 
 
   },
+  // 初始化点击事件
   initHeatmap: function() {
     var that = this;
     if (!_.isObject(collect.para.heatmap) || collect.para.heatmap.clickmap !== 'default') {
