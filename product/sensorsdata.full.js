@@ -712,13 +712,26 @@
       
       // 混淆代码
       _.base64Encode = function(data) {
-        console.log(data)
+        // 执行这一步
         if (typeof btoa === 'function') {
+          //let str = encodeURIComponent(data);
+          // 中文字加密
+          let str1 = encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+            return String.fromCharCode('0x' + p1);
+          });
+          // 中文字解密
+          let str3 = decodeURIComponent(str1.split('').map(c => `%${c.charCodeAt(0).toString(16)}`).join(''));
+          console.log(str1, 'str1');
+
+          console.log(str3, 'str3');
+          // btoa 和 atob 相互转化
           return btoa(encodeURIComponent(data).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+            //console.log(p1); 符合 %开头 然后是两个数字或字母
             return String.fromCharCode('0x' + p1);
           }));
         }
         data = String(data);
+        console.log(data, 'dataStr')
         var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
         var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
           ac = 0,
@@ -742,6 +755,7 @@
           tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
         } while (i < data.length);
 
+        console.log(tmp_arr);
         enc = tmp_arr.join('');
 
         switch (data.length % 3) {
